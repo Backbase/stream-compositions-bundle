@@ -1,7 +1,7 @@
 # stream-compositions-bundle
 
 This project bundles the Stream Compositions services in one place and removes the reliance 
-of having the build run the services from the [stream-services](https://github.com/Backbase/stream-services) source. This project
+of having the build & run the services from the [stream-services](https://github.com/Backbase/stream-services) source. This project
 uses the `maven-dependency-plugin` to download the composition service jars published on `repo.backbase.com`.
 
 The version of Stream Compositions this project points to can be found in the parent [pom.xml](./pom.xml) (currently set to `3.0.0-SNAPSHOT`).
