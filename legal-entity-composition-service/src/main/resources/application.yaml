@@ -1,0 +1,952 @@
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  zipkin:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          dbs:
+            authorization-grant-type: client_credentials
+            client-id: bb-client
+            client-secret: bb-secret
+            client-authentication-method: post
+        provider:
+          dbs:
+            token-uri: http://localhost:8181/oidc-token-converter-service/oauth/token
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    com.backbase.stream: DEBUG
+
+eureka:
+  instance:
+    preferIpAddress: false
+    healthCheckUrlPath: /actuator/health
+    statusPageUrlPath: /actuator/info
+    nonSecurePort: ${server.port}
+    metadata-map:
+      public: true
+      role: live
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/registry/eureka/
+    enabled: true
+
+backbase:
+  mtls:
+    enabled: false
+  security:
+    http:
+      enabled: false
+    service-api:
+      authentication:
+        required-scope: api:service
+  stream:
+    legalentity:
+      sink:
+        useIdentityIntegration: true
+    dbs:
+      user-manager-base-url: http://localhost:8086/user-manager
+      access-control-base-url: http://localhost:8086/access-control
+      arrangement-manager-base-url: http://localhost:8082/arrangement-manager
+    identity:
+      identity-integration-base-url: http://localhost:8181/identity-integration-service
+    compositions:
+      legal-entity:
+        enable-completed-events: true
+        enable-failed-events: true
+        integration-base-url: http://localhost:9390
+        chains:
+          product-composition:
+            enabled: false
+            base-url: http://localhost:9382
+            async: false
+
+bootstrap:
+  enabled: false
+  legalEntity:
+    name: "Acme Bank"
+    externalId: "acme"
+    realmName: "Employee"
+    legalEntityType: "BANK"
+    referenceJobRoles:
+      - name: "Employee Administrator"
+        description: "Full Administrative Access of the Employee Portal"
+        functionGroups:
+          - name: "Employee Administrator"
+            functions:
+              - functionId: "1091"
+                functionCode: "remote.deposit.capture"
+                name: "Remote Deposit Capture"
+                privileges:
+                  - privilege: "create"
+              - functionId: "1019"
+                functionCode: "manage.data.groups"
+                name: "Manage Data Groups"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1020"
+                functionCode: "manage.function.groups"
+                name: "Manage Function Groups"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1006"
+                functionCode: "product.summary"
+                name: "Product Summary"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1003"
+                functionCode: "transactions"
+                name: "Transactions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1017"
+                functionCode: "us.domestic.wire"
+                name: "US Domestic Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1018"
+                functionCode: "us.foreign.wire"
+                name: "US Foreign Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1005"
+                functionCode: "contacts"
+                name: "Contacts"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1013"
+                functionCode: "audit"
+                name: "Audit"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+              - functionId: "1011"
+                functionCode: "manage.legalentities"
+                name: "Manage Legal Entities"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1032"
+                functionCode: "assign.approval.policies"
+                name: "Assign Approval Policies"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1014"
+                functionCode: "manage.shadow.limits"
+                name: "Manage Shadow Limits"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1040"
+                functionCode: "manage.global.limits"
+                name: "Manage Global Limits"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1009"
+                functionCode: "assign.permissions"
+                name: "Assign Permissions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1010"
+                functionCode: "manage.users"
+                name: "Manage Users"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1015"
+                functionCode: "intra.company.payments"
+                name: "Intra Company Payments"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1028"
+                functionCode: "manage.service.agreements"
+                name: "Manage Service Agreements"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1038"
+                functionCode: "manage.messages"
+                name: "Manage Messages"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1031"
+                functionCode: "manage.topics"
+                name: "Manage Topics"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "execute"
+              - functionId: "1034"
+                functionCode: "manage.identities"
+                name: "Manage Identities"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1033"
+                functionCode: "manage.approval.policy.level"
+                name: "Manage Approval Policy and Level"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1035"
+                functionCode: "manage.user.profiles"
+                name: "Manage User Profiles"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1012"
+                functionCode: "manage.limits"
+                name: "Manage Limits"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1029"
+                functionCode: "manage.actions.recipes"
+                name: "Manage Action Recipes"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "execute"
+              - functionId: "1027"
+                functionCode: "access.actions.history"
+                name: "Access Actions History"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "execute"
+              - functionId: "1016"
+                functionCode: "manage.statements"
+                name: "Manage Statements"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1030"
+                functionCode: "manage.notifications"
+                name: "Manage Notifications"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "approve"
+                  - privilege: "edit"
+              - functionId: "1007"
+                functionCode: "assign.users"
+                name: "Assign Users"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+              - functionId: "1049"
+                functionCode: "lock.user"
+                name: "Lock User"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1050"
+                functionCode: "unlock.user"
+                name: "Unlock User"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1051"
+                functionCode: "manage.devices"
+                name: "Manage Devices"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1066"
+                functionCode: "manage.other.users.devices"
+                name: "Manage Other User's Devices"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1036"
+                functionCode: "support.access.payments"
+                name: "Support Access for Payments"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1075"
+                functionCode: "emulate"
+                name: "Emulate"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "execute"
+              - functionId: "1076"
+                functionCode: "act.on.behalf.of"
+                name: "Act on behalf of"
+                privileges:
+                  - privilege: "execute"
+              - functionId: "1039"
+                functionCode: "supervise.messages"
+                name: "Supervise Messages"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1041"
+                functionCode: "ach.credit.transfer"
+                name: "ACH Credit Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1042"
+                functionCode: "ach.credit.intc"
+                name: "ACH Credit - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1044"
+                functionCode: "us.domestic.wire.intc"
+                name: "US Domestic Wire - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1046"
+                functionCode: "ach.debit"
+                name: "ACH Debit"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1053"
+                functionCode: "a2a.transfer"
+                name: "A2A Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1071"
+                functionCode: "payment.templates"
+                name: "Payment Templates"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1065"
+                functionCode: "stop.checks"
+                name: "Stop Checks"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1080"
+                functionCode: "manage.employee.comments"
+                name: "Manage Employee Comments"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1089"
+                functionCode: "personal.finance.management"
+                name: "Manage Cards"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+      - name: "Business Banking Admin"
+        description: "Business Banking Admin Permissions"
+        functionGroups:
+          - name: "Business Banking Admin"
+            functions:
+              - functionId: "1091"
+                functionCode: "remote.deposit.capture"
+                name: "Remote Deposit Capture"
+                privileges:
+                  - privilege: "create"
+              - functionId: "1019"
+                functionCode: "manage.data.groups"
+                name: "Manage Data Groups"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1020"
+                functionCode: "manage.function.groups"
+                name: "Manage Function Groups"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1006"
+                functionCode: "product.summary"
+                name: "Product Summary"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1003"
+                functionCode: "transactions"
+                name: "Transactions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1017"
+                functionCode: "us.domestic.wire"
+                name: "US Domestic Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1018"
+                functionCode: "us.foreign.wire"
+                name: "US Foreign Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1005"
+                functionCode: "contacts"
+                name: "Contacts"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1065"
+                functionCode: "stop.checks"
+                name: "Stop Checks"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1041"
+                functionCode: "ach.credit.transfer"
+                name: "ACH Credit Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1042"
+                functionCode: "ach.credit.intc"
+                name: "ACH Credit - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1044"
+                functionCode: "us.domestic.wire.intc"
+                name: "US Domestic Wire - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1046"
+                functionCode: "ach.debit"
+                name: "ACH Debit"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1053"
+                functionCode: "a2a.transfer"
+                name: "A2A Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+                  - privilege: "cancel"
+              - functionId: "1071"
+                functionCode: "payment.templates"
+                name: "Payment Templates"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1035"
+                functionCode: "manage.user.profiles"
+                name: "Manage User Profiles"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1029"
+                functionCode: "manage.actions.recipes"
+                name: "Manage Action Recipes"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "execute"
+              - functionId: "1016"
+                functionCode: "manage.statements"
+                name: "Manage Statements"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1034"
+                functionCode: "manage.identities"
+                name: "Manage Identities"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1010"
+                functionCode: "manage.users"
+                name: "Manage Users"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1007"
+                functionCode: "assign.users"
+                name: "Assign Users"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+              - functionId: "1011"
+                functionCode: "manage.legalentities"
+                name: "Manage Legal Entities"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1030"
+                functionCode: "manage.notifications"
+                name: "Manage Notifications"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "approve"
+                  - privilege: "edit"
+              - functionId: "1009"
+                functionCode: "assign.permissions"
+                name: "Assign Permissions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+                  - privilege: "approve"
+              - functionId: "1089"
+                functionCode: "personal.finance.management"
+                name: "Manage Cards"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1078"
+                functionCode: "manage.authorized.users"
+                name: "Manage Authorized Users"
+                privileges:
+                  - privilege: "create"
+                  - privilege: "view"
+                  - privilege: "edit"
+      - name: "Business Banking User"
+        description: "Standard User Business Banking Permissions"
+        functionGroups:
+          - name: "Business Banking User"
+            functions:
+              - functionId: "1091"
+                functionCode: "remote.deposit.capture"
+                name: "Remote Deposit Capture"
+                privileges:
+                  - privilege: "create"
+              - functionId: "1006"
+                functionCode: "product.summary"
+                name: "Product Summary"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1003"
+                functionCode: "transactions"
+                name: "Transactions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1017"
+                functionCode: "us.domestic.wire"
+                name: "US Domestic Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+              - functionId: "1018"
+                functionCode: "us.foreign.wire"
+                name: "US Foreign Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+              - functionId: "1005"
+                functionCode: "contacts"
+                name: "Contacts"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1065"
+                functionCode: "stop.checks"
+                name: "Stop Checks"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1041"
+                functionCode: "ach.credit.transfer"
+                name: "ACH Credit Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1042"
+                functionCode: "ach.credit.intc"
+                name: "ACH Credit - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1044"
+                functionCode: "us.domestic.wire.intc"
+                name: "US Domestic Wire - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1046"
+                functionCode: "ach.debit"
+                name: "ACH Debit"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1053"
+                functionCode: "a2a.transfer"
+                name: "A2A Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1071"
+                functionCode: "payment.templates"
+                name: "Payment Templates"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1035"
+                functionCode: "manage.user.profiles"
+                name: "Manage User Profiles"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1029"
+                functionCode: "manage.actions.recipes"
+                name: "Manage Action Recipes"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "execute"
+              - functionId: "1016"
+                functionCode: "manage.statements"
+                name: "Manage Statements"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1030"
+                functionCode: "manage.notifications"
+                name: "Manage Notifications"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+      - name: "Retail User"
+        description: "Retail User Permissions"
+        functionGroups:
+          - name: "Retail User"
+            functions:
+              - functionId: "1091"
+                functionCode: "remote.deposit.capture"
+                name: "Remote Deposit Capture"
+                privileges:
+                  - privilege: "create"
+              - functionId: "1006"
+                functionCode: "product.summary"
+                name: "Product Summary"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1003"
+                functionCode: "transactions"
+                name: "Transactions"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+              - functionId: "1017"
+                functionCode: "us.domestic.wire"
+                name: "US Domestic Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1018"
+                functionCode: "us.foreign.wire"
+                name: "US Foreign Wire"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "approve"
+              - functionId: "1005"
+                functionCode: "contacts"
+                name: "Contacts"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1065"
+                functionCode: "stop.checks"
+                name: "Stop Checks"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1041"
+                functionCode: "ach.credit.transfer"
+                name: "ACH Credit Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1042"
+                functionCode: "ach.credit.intc"
+                name: "ACH Credit - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1044"
+                functionCode: "us.domestic.wire.intc"
+                name: "US Domestic Wire - Intracompany"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1046"
+                functionCode: "ach.debit"
+                name: "ACH Debit"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1053"
+                functionCode: "a2a.transfer"
+                name: "A2A Transfer"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+                  - privilege: "cancel"
+              - functionId: "1071"
+                functionCode: "payment.templates"
+                name: "Payment Templates"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1035"
+                functionCode: "manage.user.profiles"
+                name: "Manage User Profiles"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+              - functionId: "1029"
+                functionCode: "manage.actions.recipes"
+                name: "Manage Action Recipes"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "edit"
+                  - privilege: "delete"
+                  - privilege: "execute"
+              - functionId: "1016"
+                functionCode: "manage.statements"
+                name: "Manage Statements"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1010"
+                functionCode: "manage.users"
+                name: "Manage Users"
+                privileges:
+                  - privilege: "view"
+              - functionId: "1030"
+                functionCode: "manage.notifications"
+                name: "Manage Notifications"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "create"
+                  - privilege: "delete"
+                  - privilege: "edit"
+              - functionId: "1089"
+                functionCode: "personal.finance.management"
+                name: "Manage Cards"
+                privileges:
+                  - privilege: "view"
+                  - privilege: "edit"
+    users:
+      - user:
+          externalId: "admin"
+          emailAddress:
+            address: "admin@acmebank.com"
+          mobileNumber:
+            number: "123456789"
+          fullName: "Bank Administrator"
+          identityLinkStrategy: "CREATE_IN_IDENTITY"
+        referenceJobRoleNames:
+          - "Employee Administrator"

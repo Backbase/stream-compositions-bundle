@@ -1,0 +1,58 @@
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  zipkin:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          dbs:
+            authorization-grant-type: client_credentials
+            client-id: bb-client
+            client-secret: bb-secret
+            client-authentication-method: post
+        provider:
+          dbs:
+            token-uri: http://localhost:8181/oidc-token-converter-service/oauth/token
+  main:
+    allow-bean-definition-overriding: true
+  codec:
+    max-in-memory-size: 10MB
+
+backbase:
+  mtls:
+    enabled: false
+  security:
+    http:
+      enabled: false
+    service-api:
+      authentication:
+        required-scope: api:service
+  stream:
+    legalentity:
+      sink:
+        useIdentityIntegration: true
+    dbs:
+      user-manager-base-url: http://localhost:8086/user-manager
+      access-control-base-url: http://localhost:8086/access-control
+      arrangement-manager-base-url: http://localhost:8082/arrangement-manager
+      transaction-manager-base-url: http://localhost:8083/transaction-manager
+    identity:
+      identity-integration-base-url: http://localhost:8181/identity-integration-service
+    compositions:
+      transaction:
+        defaultStartOffsetInDays: 365
+        enable-completed-events: true
+        enable-failed-events: true
+        integration-base-url: http://localhost:9392
+        cursor:
+          enabled: true
+          base-url: http://localhost:9385
+          #base-url: http://localhost:7089
+
+logging:
+  level:
+    com.backbase.stream: DEBUG

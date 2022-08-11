@@ -1,0 +1,57 @@
+spring:
+  liquibase:
+    enabled: false
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  zipkin:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          dbs:
+            authorization-grant-type: client_credentials
+            client-id: bb-client
+            client-secret: bb-secret
+            client-authentication-method: post
+        provider:
+          dbs:
+            token-uri: http://localhost:8181/oidc-token-converter-service/oauth/token
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    preferIpAddress: false
+    healthCheckUrlPath: /actuator/health
+    statusPageUrlPath: /actuator/info
+    nonSecurePort: ${server.port}
+    metadata-map:
+      public: true
+      role: live
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/registry/eureka/
+    enabled: true
+
+backbase:
+  mtls:
+    enabled: false
+  security:
+    http:
+      enabled: false
+    service-api:
+      authentication:
+        required-scope: api:service
+  stream:
+    legalentity:
+      sink:
+        useIdentityIntegration: true
+    dbs:
+      user-manager-base-url: http://localhost:8086/user-manager
+      access-control-base-url: http://localhost:8086/access-control
+      arrangement-manager-base-url: http://localhost:8082/arrangement-manager
+    identity:
+      identity-integration-base-url: http://localhost:8181/identity-integration-service

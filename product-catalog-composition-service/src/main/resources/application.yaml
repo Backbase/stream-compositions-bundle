@@ -1,0 +1,131 @@
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  zipkin:
+    enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          dbs:
+            authorization-grant-type: client_credentials
+            client-id: bb-client
+            client-secret: bb-secret
+            client-authentication-method: post
+        provider:
+          dbs:
+            token-uri: http://localhost:8181/oidc-token-converter-service/oauth/token
+  main:
+    allow-bean-definition-overriding: true
+
+backbase:
+  mtls:
+    enabled: false
+  security:
+    http:
+      enabled: false
+    service-api:
+      authentication:
+        required-scope: api:service
+  stream:
+    legalentity:
+      sink:
+        useIdentityIntegration: true
+    dbs:
+      user-manager-base-url: http://localhost:8086/user-manager
+      access-control-base-url: http://localhost:8086/access-control
+      arrangement-manager-base-url: http://localhost:8082/arrangement-manager
+    identity:
+      identity-integration-base-url: http://localhost:8181/identity-integration-service
+    compositions:
+      product-catalog:
+        enable-completed-events: false
+        enable-failed-events: true
+        product-catalog-integration-url: http://localhost:${server.port}
+
+bootstrap:
+  enabled: true
+  product-catalog:
+    productTypes:
+      - externalProductId: Money Market
+        externalProductKindId: kind1
+        productKindName: Current Account
+        externalProductTypeId: Money Market
+        productTypeName: Money Market
+        externalId: Money Market
+        externalTypeId: Money Market
+        typeName: Money Market
+      - externalProductId: Checking
+        externalProductKindId: kind1
+        productKindName: Checking
+        externalProductTypeId: Checking
+        productTypeName: Checking
+        externalId: Checking
+        externalTypeId: Checking
+        typeName: Checking
+      - externalProductId: Savings
+        externalProductKindId: kind2
+        productKindName: Savings
+        externalProductTypeId: Savings
+        productTypeName: Savings
+        externalId: Savings
+        externalTypeId: Savings
+        typeName: Savings
+      - externalProductId: Credit Card
+        externalProductKindId: kind4
+        productKindName: Credit Card
+        externalProductTypeId: Credit Card
+        productTypeName: Credit Card
+        externalId: Credit Card
+        externalTypeId: Credit Card
+        typeName: Credit Card
+      - externalProductId: Loan
+        externalProductKindId: kind5
+        productKindName: Loan
+        externalProductTypeId: Loan
+        productTypeName: Loan
+        externalId: Loan
+        externalTypeId: Loan
+        typeName: Loan
+      - externalProductId: Line of Credit
+        externalProductKindId: kind5
+        productKindName: Line of Credit
+        externalProductTypeId: Line of Credit
+        productTypeName: Line of Credit
+        externalId: Line of Credit
+        externalTypeId: Line of Credit
+        typeName: Line of Credit
+      - externalProductId: Certificate of Deposit (CD)
+        externalProductKindId: kind6
+        productKindName: Certificate of Deposit (CD)
+        externalProductTypeId: Certificate of Deposit (CD)
+        productTypeName: Certificate of Deposit (CD)
+        externalId: Certificate of Deposit (CD)
+        externalTypeId: Certificate of Deposit (CD)
+        typeName: Certificate of Deposit (CD)
+      - externalProductId: Cross Book Transfer Share Account
+        externalProductKindId: kind1
+        productKindName: Cross Book Transfer Share Account
+        externalProductTypeId: Cross Book Transfer Share Account
+        productTypeName: Cross Book Transfer Share Account
+        externalId: Cross Book Transfer Share Account
+        externalTypeId: Cross Book Transfer Share Account
+        typeName: Cross Book Transfer Share Account
+      - externalProductId: Cross Book Transfer Loan Account
+        externalProductKindId: kind5
+        productKindName: Cross Book Transfer Loan Account
+        externalProductTypeId: Cross Book Transfer Loan Account
+        productTypeName: Cross Book Transfer Loan Account
+        externalId: Cross Book Transfer Loan Account
+        externalTypeId: Cross Book Transfer Loan Account
+        typeName: Cross Book Transfer Loan Account
+      - externalProductId: Mortgage
+        externalProductKindId: kind5
+        productKindName: Loan
+        externalProductTypeId: Mortgage
+        productTypeName: Mortgage
+        externalId: Mortgage
+        externalTypeId: Mortgage
+        typeName: Mortgage
